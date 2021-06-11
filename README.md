@@ -153,3 +153,50 @@ sudo nano /etc/apache2/sites-available/example.com.conf
  sudo a2dissite 000-default.conf
  sudo systemctl restart apache2
 ```
+
+
+# Решние проблем
+## Удаление MySQL (ТОЛЬКО ПРИ КРАЙНЕЙ НЕОБХОДИМОСТИ)
+```
+sudo apt-get remove --purge mysql* -y
+sudo apt-get autoremove -y
+sudo apt-get autoclean
+```
+Затем удалите папку с конфигурацией:
+```
+sudo rm -rf /etc/mysql
+```
+Ну и затем хардкор: найти все оставшиеся файлы по маске и удалить:
+```
+sudo find / -iname 'mysql' -exec rm -rf {} ;
+```
+
+## Перенастройка phpMyAdmin
+```
+sudo dpkg-reconfigure phpmyadmin
+```
+## Удаление PhpMyAdmin
+```
+sudo dpkg -P phpmyadmin
+sudo rm -f /etc/apache2/conf.d/phpmyadmin.conf
+sudo service apache2 restart
+```
+Если не получилось
+```
+sudo mv /var/lib/dpkg/info/phpmyadmin. /tmp/
+sudo dpkg –remove –force-remove-reinstreq phpmyadmin
+sudo apt remove phpmyadmin
+sudo apt autoremove
+sudo apt autoclean
+```
+## Убитие процесса
+```
+ps aux | grep -i apt
+```
+смотрим тут id процесса
+И убиваем его
+```
+sudo kill -9 9425
+```
+
+## 
