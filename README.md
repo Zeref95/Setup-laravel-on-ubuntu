@@ -107,3 +107,20 @@ sudo apt install git
 sudo apt install nodejs
 sudo apt install npm
 ```
+
+# Привязка к домену
+```
+cd /etc/apache2/
+sudo nano apache2.conf
+```
+И вписываем
+```
+<VirtualHost IP:80>                             # вместо IP указываем IP-адрес VPS
+    ServerAdmin webmaster@domain.com            # почтовый адрес администратора
+    DocumentRoot /var/www/html/domain_com       # путь расположения папки с файлами сайта
+    ServerName domain.com                       # домен, по которому должен открываться сайт
+    ErrorLog logs/domain.com-error_log          # путь и имя файла с журналом ошибок
+    CustomLog logs/domain.com-access_log common # путь и имя файла с журналом запросов
+</VirtualHost>
+```
+
