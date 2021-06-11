@@ -154,6 +154,12 @@ sudo nano /etc/apache2/sites-available/example.com.conf
  sudo systemctl restart apache2
 ```
 
+# Настройка Laravel
+Выдача прав
+```
+sudo chown -R $USER:www-data storage
+sudo chown -R $USER:www-data bootstrap/cache
+```
 
 # Решние проблем
 ## Удаление MySQL (ТОЛЬКО ПРИ КРАЙНЕЙ НЕОБХОДИМОСТИ)
