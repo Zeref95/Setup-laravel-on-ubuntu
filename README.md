@@ -1,9 +1,32 @@
 # Setup-laravel-on-ubuntu
 
-## Обновляем apt
+## Подключение по ssh
+ssh -i ПУТЬ_К_ПРИВАТ_КЛЮЧУ ПОЛЬЗОВАТЕЛЬ@СЕРВЕР
+
+## Преднастройки 
+Обновляем apt
 ```
 sudo apt-get update
 sudo apt-get upgrade
+```
+Проверяем, что достаточно памяти
+```
+free -m
+```
+Если памяти мало, то надо поставить swap
+```
+sudo dd if=/dev/zero of=/swap.file bs=1M count=2048
+sudo chmod 600 /swap.file
+sudo mkswap /swap.file 
+sudo nano /etc/fstab
+```
+Добавляем строку
+```
+/swap.file      swap            swap    defaults        0       0
+```
+Перезагружаем
+```
+reboot now
 ```
 
 ## Установка Apache
@@ -110,17 +133,23 @@ sudo apt install npm
 
 # Привязка к домену
 ```
-cd /etc/apache2/
-sudo nano apache2.conf
-```
-И вписываем
-```
-<VirtualHost IP:80>                             # вместо IP указываем IP-адрес VPS
-    ServerAdmin webmaster@domain.com            # почтовый адрес администратора
-    DocumentRoot /var/www/html/domain_com       # путь расположения папки с файлами сайта
-    ServerName domain.com                       # домен, по которому должен открываться сайт
-    ErrorLog logs/domain.com-error_log          # путь и имя файла с журналом ошибок
-    CustomLog logs/domain.com-access_log common # путь и имя файла с журналом запросов
-</VirtualHost>
-```
+mkdir /var/www/domain.com
+sudo chown -R $USER:$USER /var/www/doman.com/
+sudo chmod -R 755 /var/www
 
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/example.com.conf
+sudo nano /etc/apache2/sites-available/example.com.conf
+```
+Две строчки меняем, две добавляем, чтобы было как
+```
+        ServerAdmin ПОЧТА
+        ServerName ДОМЕН
+        ServerAlias www.ДОМЕН
+        DocumentRoot /var/www/ДОМЕН/ЕСЛИ_НАДО_ТО_PUBLIC
+```
+Включаем
+```
+ sudo a2ensite ДОМЕН
+ sudo a2dissite 000-default.conf
+ sudo systemctl restart apache2
+```
