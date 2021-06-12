@@ -172,7 +172,9 @@ sudo a2enmod rewrite
 ```
 sudo nano -H /etc/php/7.4/cli/php.ini
 ```
-
+```
+sudo service apache2 restart
+```
 ## Перенастройка phpMyAdmin
 ```
 sudo dpkg-reconfigure phpmyadmin
