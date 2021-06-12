@@ -168,6 +168,10 @@ sudo a2enmod rewrite
 ```
 
 # Решние проблем
+## Настройки php
+```
+sudo nano -H /etc/php/7.4/cli/php.ini
+```
 ## Удаление MySQL (ТОЛЬКО ПРИ КРАЙНЕЙ НЕОБХОДИМОСТИ)
 ```
 sudo apt-get remove --purge mysql* -y
