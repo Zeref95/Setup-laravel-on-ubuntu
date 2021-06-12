@@ -160,6 +160,10 @@ sudo nano /etc/apache2/sites-available/example.com.conf
 sudo chown -R $USER:www-data storage
 sudo chown -R $USER:www-data bootstrap/cache
 ```
+Настройка
+```
+sudo a2enmod rewrite
+```
 
 # Решние проблем
 ## Удаление MySQL (ТОЛЬКО ПРИ КРАЙНЕЙ НЕОБХОДИМОСТИ)
@@ -195,6 +199,8 @@ sudo apt remove phpmyadmin
 sudo apt autoremove
 sudo apt autoclean
 ```
+Если не получилось, см. Удаление сломаного пакета
+
 ## Убитие процесса
 ```
 ps aux | grep -i apt
@@ -205,4 +211,10 @@ ps aux | grep -i apt
 sudo kill -9 9425
 ```
 
-## 
+## Удаление сломанного пакета
+```
+sudo mv /var/lib/dpkg/info/<packagename>.* /tmp/
+sudo dpkg --remove --force-remove-reinstreq <packagename>
+sudo apt-get remove <packagename>
+sudo apt-get autoremove && sudo apt-get autoclean
+```
