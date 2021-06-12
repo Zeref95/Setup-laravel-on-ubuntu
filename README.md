@@ -1,9 +1,9 @@
 # Setup-laravel-on-ubuntu
 
-## Подключение по ssh
+## 🔗 Подключение по ssh
 ssh -i ПУТЬ_К_ПРИВАТ_КЛЮЧУ ПОЛЬЗОВАТЕЛЬ@СЕРВЕР
 
-## Преднастройки 
+## ⚙️Преднастройки 
 Обновляем apt
 ```
 sudo apt-get update
@@ -29,7 +29,7 @@ sudo nano /etc/fstab
 reboot now
 ```
 
-## Установка Apache
+## 🖥️ Установка Apache
 Устанавливаем apache
 ```
 sudo apt-get install apache2
@@ -38,7 +38,7 @@ sudo apt-get install apache2
 ```
 service apache2 status
 ```
-## Установка MySQL
+## 📝 Установка MySQL
 ```
 sudo apt-get install mysql-server
 ```
@@ -51,7 +51,7 @@ sudo mysql_secure_installation
 Установить валидацию паролья - n, остальное - y
 генератор паролей: http://www.onlinepasswordgenerator.ru/ (выбрать все галочки, 20 символов) 
 
-## Установка PHP
+## 🐘 Установка PHP
 ```
 sudo apt-get install php libapache2-mod-php php-mysql php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip
 ```
@@ -61,7 +61,7 @@ sudo apt-get install php libapache2-mod-php php-mysql php-curl php-gd php-mbstri
 php -v
 ```
 
-## Установка PhpMyAdmin
+## 🤵🐘Установка PhpMyAdmin
 ```
 sudo apt install php-mbstring
 sudo apt install phpmyadmin
@@ -74,7 +74,7 @@ sudo systemctl restart apache2
 Будет доступен по адресу
 http://ip||domain/phpmyadmin/
 
-## Создание пользователя
+## 🙎Создание пользователя
 ```
 sudo mysql
 ```
@@ -88,7 +88,7 @@ FLUSH PRIVILEGES;
 ctrl+z
 ```
 
-Защита phpMyAdmin
+### Защита phpMyAdmin
 Добавляем авторизацию
 ```
 sudo vi /usr/share/phpmyadmin/.htaccess
@@ -126,14 +126,14 @@ Require all granted
 </Directory>
 ```
 
-Устанавливаем остальное
+## ✨Устанавливаем остальное
 ```
 sudo apt install git
 sudo apt install nodejs
 sudo apt install npm
 ```
 
-# Привязка к домену
+# 🌏 Привязка к домену
 ```
 mkdir /var/www/domain.com
 sudo chown -R $USER:$USER /var/www/doman.com/
@@ -156,7 +156,7 @@ sudo nano /etc/apache2/sites-available/example.com.conf
  sudo systemctl restart apache2
 ```
 
-# Настройка Laravel
+# 🪐 Настройка Laravel
 Выдача прав
 ```
 sudo chown -R $USER:www-data storage
@@ -167,24 +167,10 @@ sudo chown -R $USER:www-data bootstrap/cache
 sudo a2enmod rewrite
 ```
 
-# Решние проблем
-## Настройки php
+# ❗❓⚠️ Решние проблем
+## 🐘Настройки php
 ```
 sudo nano -H /etc/php/7.4/cli/php.ini
-```
-## Удаление MySQL (ТОЛЬКО ПРИ КРАЙНЕЙ НЕОБХОДИМОСТИ)
-```
-sudo apt-get remove --purge mysql* -y
-sudo apt-get autoremove -y
-sudo apt-get autoclean
-```
-Затем удалите папку с конфигурацией:
-```
-sudo rm -rf /etc/mysql
-```
-Ну и затем хардкор: найти все оставшиеся файлы по маске и удалить:
-```
-sudo find / -iname 'mysql' -exec rm -rf {} ;
 ```
 
 ## Перенастройка phpMyAdmin
@@ -236,4 +222,19 @@ sudo mv /var/lib/dpkg/info/<packagename>.* /tmp/
 sudo dpkg --remove --force-remove-reinstreq <packagename>
 sudo apt-get remove <packagename>
 sudo apt-get autoremove && sudo apt-get autoclean
+```
+
+## Удаление MySQL (ТОЛЬКО ПРИ КРАЙНЕЙ НЕОБХОДИМОСТИ)
+```
+sudo apt-get remove --purge mysql* -y
+sudo apt-get autoremove -y
+sudo apt-get autoclean
+```
+Затем удалите папку с конфигурацией:
+```
+sudo rm -rf /etc/mysql
+```
+Ну и затем хардкор: найти все оставшиеся файлы по маске и удалить:
+```
+sudo find / -iname 'mysql' -exec rm -rf {} ;
 ```
