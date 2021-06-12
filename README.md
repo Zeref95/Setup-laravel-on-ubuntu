@@ -71,6 +71,8 @@ sudo apt install phpmyadmin
 sudo phpenmod mbstring
 sudo systemctl restart apache2
 ```
+Будет доступен по адресу
+http://ip||domain/phpmyadmin/
 
 ## Создание пользователя
 ```
@@ -200,6 +202,19 @@ sudo apt autoremove
 sudo apt autoclean
 ```
 Если не получилось, см. Удаление сломаного пакета
+
+## Если phpMyAdmin не доступен по адресу
+```
+sudo nano /etc/apache2/apache2.conf
+```
+Добавляем строку
+```
+Include /etc/phpmyadmin/apache.conf
+```
+После
+```
+sudo service apache2 restart
+```
 
 ## Убитие процесса
 ```
