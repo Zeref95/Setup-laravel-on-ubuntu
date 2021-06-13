@@ -4,6 +4,10 @@
 ssh -i ПУТЬ_К_ПРИВАТ_КЛЮЧУ ПОЛЬЗОВАТЕЛЬ@СЕРВЕР
 
 ## ⚙️Преднастройки 
+Избавляемся от sudo (если надоест какой-то пакет вызывать через sudo)
+sudo groupadd <packet-name>
+sudo usermod -aG <packet-name> $USER
+        
 Обновляем apt
 ```
 sudo apt-get update
