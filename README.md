@@ -60,7 +60,9 @@ sudo mysql_secure_installation
 
 ## 🐘 Установка PHP
 ```
-sudo apt-get install php libapache2-mod-php php-mysql php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip
+sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mysql php-common php7.4-cli php7.4-common php7.4-json php7.4-opcache php7.4-readline
+sudo a2enmod php7.4
+sudo systemctl restart apache2
 ```
 
 Проверка PHP
@@ -175,6 +177,11 @@ sudo a2enmod rewrite
 ```
 
 # ❗❓⚠️ Решние проблем
+## 🐘Переустановка php
+```
+sudo apt-get --purge remove php-common
+sudo apt-get install php-common php-mysql php-cli
+```
 ## 🐘Настройки php
 ```
 sudo nano -H /etc/php/7.4/cli/php.ini
