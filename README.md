@@ -170,6 +170,8 @@ sudo nano /etc/apache2/sites-available/example.com.conf
 ```
 sudo chown -R $USER:www-data storage
 sudo chown -R $USER:www-data bootstrap/cache
+sudo chmod -R ug+w .;
+sudo chown -R $(whoami) .git/
 ```
 Настройка
 ```
