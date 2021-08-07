@@ -256,3 +256,14 @@ sudo rm -rf /etc/mysql
 ```
 sudo find / -iname 'mysql' -exec rm -rf {} ;
 ```
+
+## Установка ssh в windows
+В powerShell
+```
+Set-Service ssh-agent -StartupType Manual
+```
+В командной строке
+```
+ssh-agent
+ssh-add .ssh/id_rsa_newizze
+```
