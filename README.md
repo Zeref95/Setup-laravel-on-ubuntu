@@ -1,5 +1,6 @@
 # Setup-laravel-on-ubuntu
 
+More info: https://www.rosehosting.com/blog/install-laravel-on-ubuntu-20-04/
 In this gide we setup laravel project in clean vps server.
 
 ## 🔗 Connect by ssh
