@@ -1,86 +1,88 @@
 # Setup-laravel-on-ubuntu
 
-## 🔗 Подключение по ssh
-ssh -i ПУТЬ_К_ПРИВАТ_КЛЮЧУ ПОЛЬЗОВАТЕЛЬ@СЕРВЕР
+In this gide we setup laravel project in clean vps server.
 
-## ⚙️Преднастройки 
-Избавляемся от sudo (если надоест какой-то пакет вызывать через sudo)
-```
-sudo groupadd <packet-name>
-sudo usermod -aG <packet-name> $USER
-```
-и перелогиниться
-        
-Обновляем apt
+## 🔗 Connect by ssh
+#### If you have ssh key
+ssh -i "privat_key" user@server
+#### If you have password
+ssh user@server
+
+
+## Pre-install
+Update apt
 ```
 sudo apt-get update
 sudo apt-get upgrade
 ```
-Проверяем, что достаточно памяти
+Check you have enough RAM
 ```
 free -m
 ```
-Если памяти мало, то надо поставить swap
+If you have less then 2 GB, and haven't swap, you have to add swap
 ```
 sudo dd if=/dev/zero of=/swap.file bs=1M count=2048
 sudo chmod 600 /swap.file
 sudo mkswap /swap.file 
 sudo nano /etc/fstab
 ```
-Добавляем строку
+Add line
 ```
 /swap.file      swap            swap    defaults        0       0
 ```
-Перезагружаем
+Reboot server
 ```
 reboot now
 ```
 
-## 🖥️ Установка Apache
-Устанавливаем apache
+## 🖥️ Setup Apache
 ```
 sudo apt-get install apache2
 ```
-Проверяем, что apache успешно установился
-```
-service apache2 status
-```
-## 📝 Установка MySQL
+If everything is alright you can go to your ip (domain) and you shoud see apache page
+
+## 📝 Setup MySQL
 ```
 sudo apt-get install mysql-server
 ```
 
-Защита MySQL
+? Защита MySQL
 ```
-sudo mysql_secure_installation
-пароль
+? sudo mysql_secure_installation
+? пароль
 ```
-Установить валидацию паролья - n, остальное - y
-генератор паролей: http://www.onlinepasswordgenerator.ru/ (выбрать все галочки, 20 символов) 
+? Установить валидацию паролья - n, остальное - y
+? генератор паролей: http://www.onlinepasswordgenerator.ru/ (выбрать все галочки, 20 символов) 
 
-## 🐘 Установка PHP
+## 🐘 Setup PHP 7.4
 ```
 sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mysql php-common php7.4-cli php7.4-common php7.4-json php7.4-opcache php7.4-readline
 sudo a2enmod php7.4
 sudo systemctl restart apache2
 ```
 
-Проверка PHP
-```
-php -v
-```
-
-## 🤵🐘Установка PhpMyAdmin
+## 🤵🐘Setup PhpMyAdmin
 ```
 sudo apt install php-mbstring
 sudo apt install phpmyadmin
-Выбор: apache, yes, 
 ```
+Chouse: apache, yes, new password, password confirmation
 ```
 sudo phpenmod mbstring
 sudo systemctl restart apache2
 ```
-Будет доступен по адресу
+```
+sudo nano /etc/apache2/apache2.conf
+```
+Then add the following line somewhere to the file:
+```
+Include /etc/phpmyadmin/apache.conf
+```
+Then restart apache:
+```
+/etc/init.d/apache2 restart
+```
+Phpmyadmin will alow by url:
 http://ip||domain/phpmyadmin/
 
 ## 🙎Создание пользователя
