@@ -1,4 +1,4 @@
-# Setup-laravel-on-ubuntu
+# Setup laravel on ubuntu 20.04
 
 More info: https://www.rosehosting.com/blog/install-laravel-on-ubuntu-20-04/
 In this gide we setup laravel project in clean vps server.
@@ -8,13 +8,12 @@ In this gide we setup laravel project in clean vps server.
 ssh -i "privat_key" user@server
 #### If you have password
 ssh user@server
-
+#### If you use VScode for connect
+ssh user@server -A
 
 ## Pre-install
-Update apt
 ```
-sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get update && sudo apt-get upgrade
 ```
 Check you have enough RAM
 ```
@@ -36,11 +35,28 @@ Reboot server
 reboot now
 ```
 
-## 🖥️ Setup Apache
+## 🖥️ Setup Apache and 🐘 PHP 7.4
 ```
-sudo apt-get install apache2
+apt-get install apache2 php7.4 libapache2-mod-php7.4 php7.4-curl php-pear php7.4-gd php7.4-dev php7.4-zip php7.4-mbstring php7.4-mysql php7.4-xml curl -y
+systemctl start apache2 && systemctl enable apache2
 ```
 If everything is alright you can go to your ip (domain) and you shoud see apache page
+http://ip||domain/
+Also you can check php install seccessfuly
+```
+php -v
+```
+
+## 🖥️ Setup Composer
+```
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+chmod +x /usr/local/bin/composer
+```
+Check this out:
+```
+composer --version
+```
 
 ## 📝 Setup MySQL
 ```
@@ -55,16 +71,8 @@ sudo apt-get install mysql-server
 ? Установить валидацию паролья - n, остальное - y
 ? генератор паролей: http://www.onlinepasswordgenerator.ru/ (выбрать все галочки, 20 символов) 
 
-## 🐘 Setup PHP 7.4
-```
-sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mysql php-common php7.4-cli php7.4-common php7.4-json php7.4-opcache php7.4-readline
-sudo a2enmod php7.4
-sudo systemctl restart apache2
-```
-
 ## 🤵🐘Setup PhpMyAdmin
 ```
-sudo apt install php-mbstring
 sudo apt install phpmyadmin
 ```
 Chouse: apache, yes, new password, password confirmation
@@ -101,7 +109,7 @@ ctrl+z
 ```
 
 ### Защита phpMyAdmin
-Добавляем авторизацию
+Добавляем авторизацию (а оно нам нужно??)
 ```
 sudo vi /usr/share/phpmyadmin/.htaccess
 ```
