@@ -120,7 +120,10 @@ sudo nano /etc/apache2/sites-available/example.com.conf
         ServerAdmin ПОЧТА
         ServerName ДОМЕН
         ServerAlias www.ДОМЕН
-        DocumentRoot /var/www/ДОМЕН/ЕСЛИ_НАДО_ТО_PUBLIC
+        DocumentRoot /var/www/ДОМЕН/public/
+        <Directory /var/www/ДОМЕН/>
+                AllowOverride All
+        </Directory>
 ```
 Включаем
 ```
