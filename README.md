@@ -234,3 +234,8 @@ Set-Service ssh-agent -StartupType Manual
 ssh-agent
 ssh-add .ssh/id_rsa_newizze
 ```
+
+
+Debian:
+https://www.itzgeek.com/how-tos/linux/debian/how-to-install-laravel-on-debian-11-debian-10.html
+https://serverspace.io/support/help/how-to-install-mysql-on-debian-10/
