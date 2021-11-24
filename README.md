@@ -99,11 +99,18 @@ FLUSH PRIVILEGES;
 ctrl+z
 ```
 
-## ✨Устанавливаем остальное
+## ✨Устанавливаем git
 ```
 sudo apt install git
-sudo apt install nodejs (найти как ставить более новую версию)
-sudo apt install npm
+```
+
+## Node.js
+Версия в первой ссылке может быть устаревшей! Последнюю версию смотри тут https://github.com/nvm-sh/nvm
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+source ~/.bashrc
+nvm list-remote
+nvm install v13.6.0 (chose LTS version)
 ```
 
 # 🌏 Привязка к домену
