@@ -16,6 +16,10 @@ For give sudo permission to user
 ```
 usermod -g 0 -o niderman
 ```
+May be also this
+```
+usermod -G root niderman
+```
 
 ## Pre-install
 ```
@@ -68,7 +72,7 @@ composer --version
 ```
 sudo apt-get install mysql-server
 ```
-генератор паролей: http://www.onlinepasswordgenerator.ru/ (выбрать все галочки, 20 символов) 
+Password generator: http://www.onlinepasswordgenerator.ru/ (Chouse all, 20 simbols) 
 
 ## 🤵🐘Setup PhpMyAdmin
 ```
@@ -93,25 +97,25 @@ Then restart apache:
 Phpmyadmin will alow by url:
 http://ip||domain/phpmyadmin/
 
-## 🙎Создание пользователя
+## 🙎Create user in DB
 ```
 sudo mysql
 ```
 ```
-CREATE USER 'ЛОГИН'@'localhost' IDENTIFIED BY 'ПАРОЛЬ';
-GRANT ALL PRIVILEGES ON *.* TO 'ЛОГИН'@'localhost' WITH GRANT OPTION;
+CREATE USER 'USER_LOGIN'@'localhost' IDENTIFIED BY 'USER_PASSWORD';
+GRANT ALL PRIVILEGES ON *.* TO 'USER_LOGIN'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 ctrl+z
 ```
 
-## ✨Устанавливаем git
+## ✨Instal GIT
 ```
 sudo apt install git
 ```
 
 ## Node.js
-Версия в первой ссылке может быть устаревшей! Последнюю версию смотри тут https://github.com/nvm-sh/nvm
+Version in the link can be old! See last version here https://github.com/nvm-sh/nvm
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 source ~/.bashrc
@@ -119,69 +123,69 @@ nvm list-remote
 nvm install v13.6.0 (chose LTS version)
 ```
 
-# 🌏 Привязка к домену
+# 🌏 Link to domen
 ```
 mkdir /var/www/domain.com
 sudo chown -R $USER:$USER /var/www/doman.com/
 sudo chmod -R 755 /var/www
 
-sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/example.com.conf
-sudo nano /etc/apache2/sites-available/example.com.conf
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/YOUR_DOMAIN.conf
+sudo nano /etc/apache2/sites-available/YOUR_DOMAIN.conf
 ```
-Две строчки меняем, две добавляем, чтобы было как
+Change two line, add to line, it shoud seems like this
 ```
-        ServerAdmin ПОЧТА
-        ServerName ДОМЕН
-        ServerAlias www.ДОМЕН
-        DocumentRoot /var/www/ДОМЕН/public/
-        <Directory /var/www/ДОМЕН/>
+        ServerAdmin YOUR_MAIL
+        ServerName YOUR_DOMAIN
+        ServerAlias www.YOUR_DOMAIN
+        DocumentRoot /var/www/YOUR_DOMAIN/public/
+        <Directory /var/www/YOUR_DOMAIN/>
                 AllowOverride All
         </Directory>
 ```
-Включаем
+Enable this
 ```
- sudo a2ensite ДОМЕН
+ sudo a2ensite YOUR_DOMAIN
  sudo a2dissite 000-default.conf
  sudo systemctl restart apache2
 ```
 
-# 🪐 Настройка Laravel
-Выдача прав
+# 🪐 Setup Laravel
+Give permissions
 ```
 sudo chown -R $USER:www-data storage
 sudo chown -R $USER:www-data bootstrap/cache
 sudo chmod -R ug+w .;
 sudo chown -R $(whoami) .git/
 ```
-Настройка
+Settings
 ```
 sudo a2enmod rewrite
 ```
 
-# ❗❓⚠️ Решние проблем
-## 🐘Переустановка php
+# ❗❓⚠️ Fix errors
+## 🐘Reinstal php
 ```
 sudo apt-get --purge remove php-common
 sudo apt-get install php-common php-mysql php-cli
 ```
-## 🐘Настройки php
+## 🐘Setting php
 ```
 sudo nano -H /etc/php/7.4/cli/php.ini
 ```
 ```
 sudo service apache2 restart
 ```
-## Перенастройка phpMyAdmin
+## ПReinstal phpMyAdmin
 ```
 sudo dpkg-reconfigure phpmyadmin
 ```
-## Удаление PhpMyAdmin
+## Delete PhpMyAdmin
 ```
 sudo dpkg -P phpmyadmin
 sudo rm -f /etc/apache2/conf.d/phpmyadmin.conf
 sudo service apache2 restart
 ```
-Если не получилось
+If it isn't work
 ```
 sudo mv /var/lib/dpkg/info/phpmyadmin. /tmp/
 sudo dpkg –remove –force-remove-reinstreq phpmyadmin
@@ -189,32 +193,32 @@ sudo apt remove phpmyadmin
 sudo apt autoremove
 sudo apt autoclean
 ```
-Если не получилось, см. Удаление сломаного пакета
+If it isn't work too see Remove Broke Package
 
-## Если phpMyAdmin не доступен по адресу
+## If phpMyAdmin not avalible by url
 ```
 sudo nano /etc/apache2/apache2.conf
 ```
-Добавляем строку
+Add line
 ```
 Include /etc/phpmyadmin/apache.conf
 ```
-После
+After that
 ```
 sudo service apache2 restart
 ```
 
-## Убитие процесса
+## УKill process
 ```
 ps aux | grep -i apt
 ```
-смотрим тут id процесса
-И убиваем его
+See process id here
+And kill it
 ```
 sudo kill -9 9425
 ```
 
-## Удаление сломанного пакета
+## Remove Broke Package
 ```
 sudo mv /var/lib/dpkg/info/<packagename>.* /tmp/
 sudo dpkg --remove --force-remove-reinstreq <packagename>
@@ -222,33 +226,49 @@ sudo apt-get remove <packagename>
 sudo apt-get autoremove && sudo apt-get autoclean
 ```
 
-## Удаление MySQL (ТОЛЬКО ПРИ КРАЙНЕЙ НЕОБХОДИМОСТИ)
+## Delete MySQL (WARNING!! DON'T DO IT WITHOUT VERY STRONG REASON)
 ```
 sudo apt-get remove --purge mysql* -y
 sudo apt-get autoremove -y
 sudo apt-get autoclean
 ```
-Затем удалите папку с конфигурацией:
+After delete derectory with configs:
 ```
 sudo rm -rf /etc/mysql
 ```
-Ну и затем хардкор: найти все оставшиеся файлы по маске и удалить:
+After that find all fils what wasn't delete:
 ```
 sudo find / -iname 'mysql' -exec rm -rf {} ;
 ```
 
-## Установка ssh в windows
-В powerShell
+# Something else 
+
+## Setup ssh в windows
+In powerShell
 ```
 Set-Service ssh-agent -StartupType Manual
 ```
-В командной строке
+In cmd
 ```
 ssh-agent
 ssh-add .ssh/id_rsa_newizze
 ```
 
-
-Debian:
+## INstruction for Debian:
 https://www.itzgeek.com/how-tos/linux/debian/how-to-install-laravel-on-debian-11-debian-10.html
 https://serverspace.io/support/help/how-to-install-mysql-on-debian-10/
+
+# Make bash script Bash 
+Simple bash file looks like this
+example.sh
+```
+#!/bin/sh  
+cd /var/www/staging.stubtools.com
+git pull
+yarn dev
+```
+Use 
+```
+sh example.sh
+```
+for start it
