@@ -11,6 +11,12 @@ ssh user@server
 #### If you use VScode for connect
 ssh user@server -A
 
+# Create user and make permission
+For give sudo permission to user
+```
+usermod -g 0 -o niderman
+```
+
 ## Pre-install
 ```
 sudo apt-get update && sudo apt-get upgrade
