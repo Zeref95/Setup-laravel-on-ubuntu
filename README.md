@@ -14,11 +14,13 @@ ssh user@server -A
 # Create user and make permission
 For give sudo permission to user
 ```
-usermod -g 0 -o niderman
+usermod -G root USER_NAME
+usermod -a -G sudo USER_NAME
+sudo nano /etc/sudoers
 ```
-May be also this
+add in this file
 ```
-usermod -G root niderman
+USER_NAME ALL=(ALL) ALL
 ```
 
 ## Pre-install
