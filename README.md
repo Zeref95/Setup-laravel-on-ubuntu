@@ -1,31 +1,34 @@
+![Tux, the Linux mascot](https://ibmimedia.com/assets/uploads/media-uploader/how-to-deploy-laravel-project-on-linux-server-01610304977.jpg)
 # Setup laravel on ubuntu 20.04
-
-More info: https://www.rosehosting.com/blog/install-laravel-on-ubuntu-20-04/
-In this gide we setup laravel project in clean vps server.
 
 ## 🔗 Connect by ssh
 #### If you have ssh key
-ssh -i "privat_key" user@server
+ssh -i "privat_key" user@server_ip
 #### If you have password
-ssh user@server
+ssh user@server_ip
 #### If you use VScode for connect
-ssh user@server -A
+ssh user@server_ip -A
 
 # Create user and make permission
+Create new user and make password for him
+```
+sudo useradd -m username
+sudo passwd username
+```
 For give sudo permission to user
 ```
 usermod -G root USER_NAME
-usermod -a -G sudo USER_NAME
 sudo nano /etc/sudoers
 ```
 add in this file
 ```
 USER_NAME ALL=(ALL) ALL
 ```
+Reenter to server by this user
 
 ## Pre-install
 ```
-sudo apt-get update && sudo apt-get upgrade
+sudo apt-get update && sudo apt-get upgrade -y
 ```
 Check you have enough RAM
 ```
@@ -47,9 +50,17 @@ Reboot server
 reboot now
 ```
 
-## 🖥️ Setup Apache and 🐘 PHP 7.4
+## 🖥️ Setup Apache and 🐘 PHP 8.1
+First we need to install php8 repository
 ```
-apt-get install apache2 php7.4 libapache2-mod-php7.4 php7.4-curl php-pear php7.4-gd php7.4-dev php7.4-zip php7.4-mbstring php7.4-mysql php7.4-xml curl -y
+sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
+sudo add-apt-repository ppa:ondrej/php
+```
+Chose apache2
+```
+sudo apt-get update && sudo apt-get upgrade -y
+
+sudo apt install apache2 curl php8.0 php8.0-common php8.0-dom php8.0-bcmath openssl php8.0-mbstring
 systemctl start apache2 && systemctl enable apache2
 ```
 If everything is alright you can go to your ip (domain) and you shoud see apache page
@@ -74,17 +85,13 @@ composer --version
 ```
 sudo apt-get install mysql-server
 ```
-Password generator: http://www.onlinepasswordgenerator.ru/ (Chouse all, 20 simbols) 
+Password generator: http://www.onlinepasswordgenerator.ru/ (Chouse all, 20 simbols)
 
 ## 🤵🐘Setup PhpMyAdmin
 ```
 sudo apt install phpmyadmin
 ```
 Chouse: apache, yes, new password, password confirmation
-```
-sudo phpenmod mbstring
-sudo systemctl restart apache2
-```
 ```
 sudo nano /etc/apache2/apache2.conf
 ```
@@ -107,22 +114,21 @@ sudo mysql
 CREATE USER 'USER_LOGIN'@'localhost' IDENTIFIED BY 'USER_PASSWORD';
 GRANT ALL PRIVILEGES ON *.* TO 'USER_LOGIN'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
-
-ctrl+z
+exit
 ```
 
 ## ✨Instal GIT
 ```
-sudo apt install git
+sudo apt install git -y
 ```
 
 ## Node.js
 Version in the link can be old! See last version here https://github.com/nvm-sh/nvm
 ```
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 source ~/.bashrc
 nvm list-remote
-nvm install v13.6.0 (chose LTS version)
+nvm install v16.13.1 (chose LTS version)
 ```
 
 # 🌏 Link to domen
@@ -149,6 +155,17 @@ Enable this
  sudo a2ensite YOUR_DOMAIN
  sudo a2dissite 000-default.conf
  sudo systemctl restart apache2
+```
+# Instal project from git
+Create ssh
+```
+ssh-keygen
+cat YOUR_PATH_TO_SSH/id_rsa.pub
+```
+Copy this key and add it to tou git by site
+```
+cd /var/www/DOMAIN
+git clone SSH_ADDRESS .
 ```
 
 # 🪐 Setup Laravel
@@ -210,7 +227,7 @@ After that
 sudo service apache2 restart
 ```
 
-## УKill process
+## Kill process
 ```
 ps aux | grep -i apt
 ```
@@ -243,7 +260,7 @@ After that find all fils what wasn't delete:
 sudo find / -iname 'mysql' -exec rm -rf {} ;
 ```
 
-# Something else 
+# Something else
 
 ## Setup ssh в windows
 In powerShell
@@ -260,7 +277,7 @@ ssh-add .ssh/id_rsa_newizze
 https://www.itzgeek.com/how-tos/linux/debian/how-to-install-laravel-on-debian-11-debian-10.html
 https://serverspace.io/support/help/how-to-install-mysql-on-debian-10/
 
-# Make bash script Bash 
+# Make bash script Bash
 Simple bash file looks like this
 example.sh
 ```
@@ -269,7 +286,7 @@ cd /var/www/staging.stubtools.com
 git pull
 yarn dev
 ```
-Use 
+Use
 ```
 sh example.sh
 ```
