@@ -167,11 +167,16 @@ Copy this key and add it to tou git by site
 cd /var/www/DOMAIN
 git clone SSH_ADDRESS .
 ```
+If you have error "Permanently added 'github.com,140.82.121.4' (ECDSA) to the list of known hosts."
+```
+sudo nano ~/.ssh/known_hosts
+cd .. && rm -rf DOMAIN && mkdir DOMAIN && cd DOMAIN
+```
+And then try again
 
 # 🪐 Setup Laravel
 Give permissions
 ```
-sudo chown -R $USER:www-data storage
 sudo chown -R $USER:www-data bootstrap/cache
 sudo chmod -R ug+w .;
 sudo chown -R $(whoami) .git/
@@ -179,7 +184,9 @@ sudo chown -R $(whoami) .git/
 Settings
 ```
 sudo a2enmod rewrite
+systemctl restart apache2
 ```
+Next you can use "composer i" and you have to know what you should do next
 
 # ❗❓⚠️ Fix errors
 ## 🐘Reinstal php
