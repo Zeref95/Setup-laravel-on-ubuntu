@@ -50,7 +50,7 @@ Reboot server
 reboot now
 ```
 
-## 🖥️ Setup Apache and 🐘 PHP 8.1
+## 🖥️ Setup Apache and 🐘 PHP 8.0
 First we need to install php8 repository
 ```
 sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
