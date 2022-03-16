@@ -156,7 +156,7 @@ Enable this
  sudo a2dissite 000-default.conf
  sudo systemctl restart apache2
 ```
-# Instal project from git
+# Install project from git
 Create ssh
 ```
 ssh-keygen
