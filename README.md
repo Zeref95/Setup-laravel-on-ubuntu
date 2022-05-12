@@ -150,6 +150,11 @@ Change two line, add to line, it shoud seems like this
                 AllowOverride All
         </Directory>
 ```
+P.S.
+If you use vue router instead laravel router add this inside <Directory></Directory>
+```
+FallbackResource /index.html
+```
 Enable this
 ```
  sudo a2ensite YOUR_DOMAIN
