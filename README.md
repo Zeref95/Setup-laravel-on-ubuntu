@@ -18,6 +18,8 @@ sudo passwd username
 For give sudo permission to user
 ```
 usermod -G root USER_NAME
+(or)
+usermod -aG sudo USER_NAME
 sudo nano /etc/sudoers
 ```
 add in this file
@@ -25,6 +27,25 @@ add in this file
 USER_NAME ALL=(ALL) ALL
 ```
 Reenter to server by this user
+
+(
+If Tab doesn't work and you cant see username
+```
+which bash
+chsh -s /bin/bash
+```
+Then reload conection
+)
+
+Upload ssh key
+```
+ssh-copy-id username@remote_host
+```
+And disable password
+```
+sudo nano /etc/ssh/sshd_config
+PasswordAuthentication no
+```
 
 ## Pre-install
 ```
